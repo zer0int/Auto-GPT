@@ -21,8 +21,8 @@ Please tag me on [Twitter: @zer0int1](https://twitter.com/zer0int1) if you use t
 ### Optional Prerequisites
 Depending on your use case, you might also need:
 
-- [shap-e by OpenAI](https://github.com/openai/shap-e) (Text-to-3D)
-- [stablediffusion by Stability-AI](https://github.com/Stability-AI/stablediffusion) (Text-to-Image, for commandline & running local as implemented in this repo)
+- [Shap-E by OpenAI](https://github.com/openai/shap-e) (Text-to-3D)
+- [Stable Diffusion by Stability-AI](https://github.com/Stability-AI/stablediffusion) (Text-to-Image, for commandline & running local as implemented in this repo)
 
 Other third-party credits: 
 CLIP Gradient Ascent: Adaptation of the original notebook "Closed Test Ascending CLIPtext" by [@advadnoun](https://twitter.com/advadnoun), used with explicit permission (Thanks!)
