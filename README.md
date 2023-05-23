@@ -16,7 +16,7 @@ Please tag me on [Twitter: @zer0int1](https://twitter.com/zer0int1) if you use t
 
 ### Prerequisites:
 
-- [CLIP by OpenAI](https://github.com/openai/CLIP) (sufficient for visual web search, for example)
+- [CLIP by OpenAI](https://github.com/openai/CLIP)
 
 ### Optional Prerequisites
 Depending on your use case, you might also need:
