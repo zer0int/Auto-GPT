@@ -10,6 +10,8 @@
 
 Please tag me on [Twitter: @zer0int1](https://twitter.com/zer0int1) if you use this for anything; I'd love to see it!
 
+[![Infinite shoe design with CLIP + Stable Diffusion](http://img.youtube.com/vi/YfzFuTe1E5tU/0.jpg)](http://www.youtube.com/watch?v=fzFuTe1E5tU "Infinite shoe design with CLIP + Stable Diffusion") [![Infinite 3D mesh shoe design with CLIP + Shap-E](http://img.youtube.com/vi/0C5WdhPfvIk/0.jpg)](http://www.youtube.com/watch?v=0C5WdhPfvIk "Infinite 3D mesh shoe design with CLIP + Shap-E")
+
 ----------------
 
 ## Steps to install / use
