@@ -14,22 +14,22 @@ Please tag me on [Twitter: @zer0int1](https://twitter.com/zer0int1) if you use t
 
 ## Steps to install / use
 
-### Prerequisites:
+### Prerequisite:
 
-- [CLIP by OpenAI](https://github.com/openai/CLIP)
+- ✅ [CLIP by OpenAI](https://github.com/openai/CLIP)
 
 ### Optional Prerequisites:
 Depending on your use case, you might also need:
 
-- [Shap-E by OpenAI](https://github.com/openai/shap-e) (Text-to-3D)
-- [Stable Diffusion by Stability-AI](https://github.com/Stability-AI/stablediffusion) (Text-to-Image, for commandline & running local as implemented in this repo)
+- ✔️ [Shap-E by OpenAI](https://github.com/openai/shap-e) (Text-to-3D)
+- ✔️ [Stable Diffusion by Stability-AI](https://github.com/Stability-AI/stablediffusion) (Text-to-Image, for commandline & running local as implemented in this repo)
 
 Other third-party credits: 
 - CLIP Gradient Ascent: Adaptation of the original notebook "Closed Test Ascending CLIPtext" by [@advadnoun](https://twitter.com/advadnoun)
 - CLIP GradCAM: [https://github.com/kevinzakka/clip_playground](https://github.com/kevinzakka/clip_playground)
 - [My YouTube with screen recordings of this repo in action](https://www.youtube.com/@zer0int1/videos)
 
-### Usage:
+### 🤔❗ Usage:
 
 0. Ensure prequisites (above repos) are installed and working
 1. Put (git-clone, download-zip-extract) this in your C:/User/JohnDoe or equivalent "user home" folder ("z" is no longer a null byte, I removed it, so your username can be with a "z", like mine)
@@ -62,7 +62,7 @@ When you run this FOR THE FIRST TIME EVER, it will download & build the Shap-E m
 -----------------
 ![0001-RN50x4_L1-exploemails](https://github.com/zer0int/Auto-GPT/assets/132047210/7290c63a-aa86-4913-beee-435a68fe7c2f) ![0001-RN50x4_L4-sett](https://github.com/zer0int/Auto-GPT/assets/132047210/54373152-8c3b-40c4-a757-938c5a29963d)
 
-BONUS: See what CLIP sees by computing (fast!) a heatmap highlighting which regions in the image activate the most to a given caption.
+🤖👀 BONUS: See what CLIP sees by computing (fast!) a heatmap highlighting which regions in the image activate the most to a given caption.
 ```bash
 python manual_gradcam.py --image "0001.png" --txt "tokens_0001.txt"
 ```
@@ -74,7 +74,7 @@ For GradCAM requirements, see Auto-GPT/autogpt/commands/CLIP_gradcam.py -- adapt
 ToDo: Implement as "y -D" option that Auto-GPT accepts, same as "y -N", to execute after the next time run_clip is executed.
 
 -----
-## ❗ Important tips and troubleshooting, including model limitations
+## ❓ Important tips and troubleshooting, including model limitations
 
 - Oddly enough, the relative output .\auto_gpt_workspace\clip_tokens.txt will ensure GPT-3.5 does not get confused and not knowing where CLIP token "opinion" is. 
   GPT-4, however, will once try to read_file from the wrong place in the beginning. Simply approve with y, AI will "think" about file-not-found, correct itself, and never make that mistake again.
@@ -89,17 +89,17 @@ ToDo: Implement as "y -D" option that Auto-GPT accepts, same as "y -N", to execu
   So: Better have a bit of redundancy trash than files overwritten, right? Feel free to implement something that works, if you know how - I'd be delighted!
 
 
-## ⚠️⚠️ WARNING ABOUT "BIAS" AND "HARMFUL" OUTPUT IN PRE-TRAINED, UNCENSORED CLIP MODELS.
+##⚠️⚠️ WARNING ABOUT "BIAS" AND "HARMFUL" OUTPUT IN PRE-TRAINED, UNCENSORED CLIP MODELS.
 
-While you probably shouldn't run Auto-GPT in "autonomous" mode, anyway, you'll probably also want to ACTUALLY proof-read the GPT-generated prompt carefully rather than just approving it!
-That is especially the case if you are not running local, and spamming offensive words might just get you banned from a text-to-image API.
+While you probably shouldn't run Auto-GPT in "autonomous" mode, anyway, you'll probably also want to ACTUALLY proof-read the GPT-generated prompt ❗❗ carefully rather than just approving it!
+That is especially the case if you are not running local, and spamming offensive words might just get you banned from a text-to-image API ❗❗
 
 ## ⚠️ CLIP IS UNCENSORED ⚠️
 - CLIP SEES WHATEVER CLIP WANTS TO SEE (doesn't have to be related to what *you* see) 🤯
 
-So a harmless image (your opinion) might lead to offensive, racist, biased, sexist output (CLIP opinion). Especially true if non-English text is present in the image.
-More info on typographic attacks and why CLIP is so obsessed with text: [Multimodal Neurons](https://openai.com/research/multimodal-neurons)
-Check the model-card.md and heed the warnings from OpenAI: [CLIP Model Card](https://github.com/openai/CLIP/blob/main/model-card.md)
+So a harmless image (your opinion) might lead to offensive, racist, biased, sexist output (CLIP opinion) ❗. Especially true if non-English text is present in the image.
+👉 More info on typographic attacks and why CLIP is so obsessed with text: [Multimodal Neurons](https://openai.com/research/multimodal-neurons)
+👉 Check the model-card.md and heed the warnings from OpenAI: [CLIP Model Card](https://github.com/openai/CLIP/blob/main/model-card.md)
 
 Use the above CLIPrun.py with pepe.png for an example that shouldn't be too toxic, but proves a point with regard to "oh yes, CLIP knows - CLIP was trained on the internet".
 
@@ -110,6 +110,7 @@ However, CLIP opinion often includes chained "longword" tokens, like e.g. "insta
 
 You have been warned. Do whatever floats your boat, but keep it limited to *your* boat - and don't blame me for getting kick-banned from any text-to-image API. That's all. ❗
 ---
+⚠️⚠️⚠️⚠️⚠️⚠️
 ----------------
 Original README.MD
 ---
