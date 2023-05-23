@@ -1,18 +1,32 @@
 """ Image Generation Module for AutoGPT."""
 import io
+import os
+import sys
 import uuid
+import shutil
+import subprocess
 from base64 import b64decode
+from pathlib import Path
 
 import openai
 import requests
 from PIL import Image
+import re
 
 from autogpt.commands.command import command
 from autogpt.config import Config
 from autogpt.logs import logger
+from autogpt.visionconfig import visionhack
+from autogpt.commands.execute_code import execute_shell
 
 CFG = Config()
 
+def is_relative_to(path, *other):
+    try:
+        path.relative_to(*other)
+        return True
+    except ValueError:
+        return False
 
 @command("generate_image", "Generate Image", '"prompt": "<prompt>"', CFG.image_provider)
 def generate_image(prompt: str, size: int = 256) -> str:
@@ -25,7 +39,17 @@ def generate_image(prompt: str, size: int = 256) -> str:
     Returns:
         str: The filename of the image
     """
-    filename = f"{CFG.workspace_path}/{str(uuid.uuid4())}.jpg"
+    #workspace_directory = f"{visionhack}/auto_gpt_workspace"
+    #f"python {Path(filename).relative_to(CFG.workspace_directory)}",
+    workspace_path= "{visionhack}/auto_gpt_workspace"
+    workspace_directory = "{visionhack}/images"
+    #filename = f"{CFG.workspace_path}/{str(uuid.uuid4())}.jpg"
+    filename = f"{workspace_path}/{str(uuid.uuid4())}.jpg"
+    if is_relative_to(Path(filename), workspace_directory):
+        relative_path = Path(filename).relative_to(workspace_directory)
+        command_line = f'python {relative_path}'
+    else:
+        command_line = f'python {filename}'
 
     # DALL-E
     if CFG.image_provider == "dalle":
@@ -36,6 +60,9 @@ def generate_image(prompt: str, size: int = 256) -> str:
     # SD WebUI
     elif CFG.image_provider == "sdwebui":
         return generate_image_with_sd_webui(prompt, filename, size)
+    # stablediffusion
+    elif CFG.image_provider == "stablediffusion":
+        return generate_image_with_stablediffusion(prompt, size)
     return "No Image Provider Set"
 
 
@@ -163,3 +190,46 @@ def generate_image_with_sd_webui(
     image.save(filename)
 
     return f"Saved to disk:{filename}"
+
+def generate_image_with_stablediffusion(prompt: str, size: int = 768) -> str:
+    """Generate an image with Stable Diffusion.
+
+    Args:
+        prompt (str): The prompt to use
+
+    Returns:
+        str: The filename of the image
+    """
+    # Execute the stablediffusion.py script with the provided prompt
+    command_line = f'python stablediffusion.py --prompt "{prompt}"'
+    output = execute_shell(command_line)
+
+    # Check for errors in the output
+    if "Error" in output:
+        return f"Error generating image: {output}"
+
+    output_directory = f"{stablehome}/outputs/txt2img-samples/samples"
+    workspace_directory = f"{visionhack}/images"
+
+    # Find the highest numbered PNG file
+    pattern = re.compile(r'^(\d{5})\.png$')
+    max_number = -1
+    filename = None
+
+    for entry in os.listdir(output_directory):
+        match = pattern.match(entry)
+        if match:
+            number = int(match.group(1))
+            if number > max_number:
+                max_number = number
+                filename = entry
+
+    if filename:
+        # Copy the file to the workspace directory
+        generated_image_path = os.path.join(output_directory, filename)
+        new_image_path = os.path.join(workspace_directory, filename)
+        shutil.copyfile(generated_image_path, new_image_path)
+
+        return f"stablediffusion generated image saved to {filename}"
+    else:
+        return "Error: Generated image not found."

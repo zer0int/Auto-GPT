@@ -1,7 +1,15 @@
 """ Command and Control """
 import json
 from typing import Dict, List, NoReturn, Union
-
+import os
+import sys
+import subprocess
+import re
+import shutil
+from pathlib import Path
+from autogpt.commands.execute_code import run_clip
+from autogpt.commands.execute_code import run_shape
+from autogpt.commands.execute_code_clip import run_clip, run_shape
 from autogpt.agent.agent_manager import AgentManager
 from autogpt.commands.command import CommandRegistry, command
 from autogpt.commands.web_requests import scrape_links, scrape_text
@@ -12,6 +20,12 @@ from autogpt.processing.text import summarize_text
 from autogpt.prompts.generator import PromptGenerator
 from autogpt.speech import say_text
 from autogpt.url_utils.validators import validate_url
+from autogpt.commands.execute_code import run_clip
+from autogpt.commands.execute_code import run_shape
+from autogpt.commands.execute_code_clip import run_clip, run_shape
+from autogpt.visionconfig import visionhack, stablehome
+
+
 
 CFG = Config()
 AGENT_MANAGER = AgentManager()
@@ -245,3 +259,128 @@ def delete_agent(key: str) -> str:
     """
     result = AGENT_MANAGER.delete_agent(key)
     return f"Agent {key} deleted." if result else f"Agent {key} does not exist."
+
+
+@command("run_clip", "Run CLIP", '"image_filename": "<image_filename>"')
+def run_clip(image_filename: str) -> str:
+    """Run the CLIPrun.py script with a given image filename
+
+    Args:
+        image_filename (str): The name of the image file
+
+    Returns:
+        str: The output of the CLIPrun.py script
+    """
+    current_dir = os.getcwd()
+    # Change dir into workspace if necessary
+    workspace_directory = f"{visionhack}/auto_gpt_workspace"
+    if str(workspace_directory) not in current_dir:
+        os.chdir(workspace_directory)
+
+    # Construct the full image path
+    image_path = f"{visionhack}/images/{image_filename}"
+    command_line = f"python CLIPrun.py --image_path {image_path}"
+    print(f"Executing command 'run_clip' in working directory...")
+
+    result = subprocess.run(command_line, capture_output=True, shell=True, encoding="utf-8")
+    # Extract the output filename from the result.stdout
+    output_filename_line = ""
+    for line in result.stdout.split("\n"):
+        if "CLIP tokens saved to" in line:
+            output_filename_line = line
+            break
+
+    output = f"{output_filename_line}"
+
+    # Change back to whatever the prior working dir was
+    os.chdir(current_dir)
+
+    return output
+
+
+@command("run_shape", "Run SHAPE", '"prompt": "<prompt>"')
+def run_shape(prompt: str) -> str:
+    """Run the SHAPErun.py script with a given prompt
+
+    Args:
+        prompt (str): The text prompt to use for generating the 3D image
+
+    Returns:
+        str: The output of the SHAPErun.py script
+    """
+    current_dir = os.getcwd()
+    # Change dir into workspace if necessary
+    workspace_directory = f"{visionhack}/auto_gpt_workspace"
+    if str(workspace_directory) not in current_dir:
+        os.chdir(workspace_directory)
+
+    command_line = f'python SHAPErun.py --prompt "{prompt}"'
+    print(f"Executing command 'run_shape' in working directory...")
+
+    result = subprocess.run(command_line, capture_output=True, shell=True, encoding="utf-8")
+    # Extract the output filename from the result.stdout
+    output_filename_line = ""
+    for line in result.stdout.split("\n"):
+        if "SHAPE image" in line:
+            output_filename_line = line
+            break
+
+    output = f"{output_filename_line}"
+
+    # Change back to whatever the prior working dir was
+    os.chdir(current_dir)
+
+    return output
+
+@command("run_image", "Generate Image with stablediffusion", '"prompt": "<prompt>"')
+def run_image(prompt: str, size: int = 768) -> str:
+    """Generate an image with Stable Diffusion.
+
+    Args:
+        prompt (str): The prompt to use
+
+    Returns:
+        str: The filename of the image
+    """
+    current_dir = os.getcwd()
+    # Change dir into workspace if necessary
+    workspace_directory = f"{visionhack}/auto_gpt_workspace"
+    if str(workspace_directory) not in current_dir:
+        os.chdir(workspace_directory)
+
+    # Execute the stablediffusion.py script with the provided prompt
+    command_line = f'python stablediffusion.py --prompt "{prompt}"'
+    print(f"Executing command 'run_image' in working directory...")
+
+    result = subprocess.run(command_line, capture_output=True, shell=True, encoding="utf-8")
+    output = result.stdout
+
+    # Check for errors in the output
+    if "Error" in output:
+        return f"Error generating image: {output}"
+
+    output_directory = f"{stablehome}/outputs/txt2img-samples/samples"
+    workspace_directory = f"{visionhack}/images"
+
+    # Find the highest numbered PNG file
+    pattern = re.compile(r'^(\d{5})\.png$')
+    max_number = -1
+    filename = None
+
+    for entry in os.listdir(output_directory):
+        match = pattern.match(entry)
+        if match:
+            number = int(match.group(1))
+            if number > max_number:
+                max_number = number
+                filename = entry
+
+    if filename:
+        # Copy the file to the workspace directory
+        generated_image_path = os.path.join(output_directory, filename)
+        new_image_path = os.path.join(workspace_directory, filename)
+        shutil.copyfile(generated_image_path, new_image_path)
+
+        return f"generated image saved to {filename}"
+    else:
+        return "Error: Generated image not found."

@@ -18,8 +18,8 @@ from autogpt.config import Config
 from autogpt.logs import logger
 from autogpt.models.base_open_ai_plugin import BaseOpenAIPlugin
 
-
-def inspect_zip_for_modules(zip_path: str, debug: bool = False) -> list[str]:
+from typing import List
+def inspect_zip_for_modules(zip_path: str, debug: bool = False) -> List[str]:
     """
     Inspect a zipfile for a modules.
 

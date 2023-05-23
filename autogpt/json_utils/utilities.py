@@ -29,8 +29,8 @@ def extract_char_position(error_message: str) -> int:
     else:
         raise ValueError("Character position not found in the error message.")
 
-
-def validate_json(json_object: object, schema_name: str) -> dict | None:
+from typing import Union
+def validate_json(json_object: object, schema_name: str) -> Union[dict, None]:
     """
     :type schema_name: object
     :param schema_name: str
@@ -57,7 +57,8 @@ def validate_json(json_object: object, schema_name: str) -> dict | None:
     return json_object
 
 
-def validate_json_string(json_string: str, schema_name: str) -> dict | None:
+from typing import Union
+def validate_json(json_object: object, schema_name: str) -> Union[dict, None]:
     """
     :type schema_name: object
     :param schema_name: str

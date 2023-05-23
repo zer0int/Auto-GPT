@@ -118,15 +118,18 @@ def run_auto_gpt(
     cfg.set_plugins(scan_plugins(cfg, cfg.debug_mode))
     # Create a CommandRegistry instance and scan default folder
     command_registry = CommandRegistry()
+    print(command_registry)
 
     command_categories = [
         "autogpt.commands.analyze_code",
         "autogpt.commands.audio_text",
         "autogpt.commands.execute_code",
+        "autogpt.commands.execute_code_clip",
         "autogpt.commands.file_operations",
         "autogpt.commands.git_operations",
         "autogpt.commands.google_search",
         "autogpt.commands.image_gen",
+        "autogpt.commands.image_gen_sd",
         "autogpt.commands.improve_code",
         "autogpt.commands.twitter",
         "autogpt.commands.web_selenium",

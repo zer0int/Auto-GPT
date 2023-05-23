@@ -1,3 +1,114 @@
+# Auto-GPT with CLIP vision for GPT-4 and GPT-3.5
+
+## A pseudo-multimodal Auto-GPT 
+(We're essentially just prompting GPT with CLIP's "opinion" tokens for what it "sees" in an image; which is surprisingly effective, nevertheless!)
+
+### GPT autonomous infinite variation prompting of text-to-image and text-to-3D 
+### GPT visual websearch based on image content 
+### your_idea_here
+
+Please tag me on [Twitter: @zer0int1](https://twitter.com/zer0int1) if you use this for anything; I'd love to see it!
+
+----------------
+
+## Steps to install / use
+
+### Prerequisites:
+
+- [CLIP by OpenAI](https://github.com/openai/CLIP) (sufficient for visual web search, for example)
+
+### Optional Prerequisites
+Depending on your use case, you might also need:
+
+- [shap-e by OpenAI](https://github.com/openai/shap-e) (Text-to-3D)
+- [stablediffusion by Stability-AI](https://github.com/Stability-AI/stablediffusion) (Text-to-Image, for commandline & running local as implemented in this repo)
+
+Other third-party credits: 
+CLIP Gradient Ascent: Adaptation of the original notebook "Closed Test Ascending CLIPtext" by [@advadnoun](https://twitter.com/advadnoun), used with explicit permission (Thanks!)
+CLIP GradCAM: [https://github.com/kevinzakka/clip_playground](https://github.com/kevinzakka/clip_playground)
+[My YouTube with screen recordings of this repo in action](https://www.youtube.com/@zer0int1/videos)
+
+### Usage:
+
+0. Ensure prequisites (above repos) are installed and working
+1. Put (git-clone, download-zip-extract) this in your C:/User/JohnDoe or equivalent "user home" folder ("z" is no longer a null byte, I removed it, so your username can be with a "z", like mine)
+2. Edit Auto-GPT/auto_gpt_workspace/CLIP.py according to your hardware (VRAM requirement table inside; yes you can run a small CLIP with 6 GB of VRAM!)
+3. From Auto-GPT/auto_gpt_workspace, copy CLIP.py and (if applicable) SHAPE.py to your C:/User/JohnDoe (one level above the Auto-GPT folder)
+4. Edit Auto-GPT/autogpt/visionconfig.py (Should be straightforward and self-explanatory, define the absolute paths on your local system in this config)
+5. In your .env, remove the comment and set EXECUTE_LOCAL_COMMANDS=True and RESTRICT_TO_WORKSPACE=False
+6. Pick one of the .yaml files from Auto-GPT/ai_settings_examples (see README.TXT for details!), copy it to the main Auto-GPT folder and rename it, so you have e.g. C:/User/JohnDoe/Auto-GPT/ai_settings.yaml
+7. (Optional) put your own images (filenames as per the ai_settings.yaml) in the Auto-GPT/images folder (or use the example images I provided)
+8. (Optional, case: running local stable diffusion): Edit Auto-GPT/auto_gpt_workspace/stablediffusion.py to match the model / config of SD you want to use
+8. (Optional, recommended) Make sure that everything is working by running the scripts independently outside of Auto-GPT (see below)
+
+### Verify everything works as expected via a cmd -> cd into Auto-GPT/auto_gpt_workspace and run:
+
+```bash
+python CLIPrun.py --image_path "C:/Users/JohnDoe/Auto-GPT/images/0001.png"
+```
+Replace JohnDoe with YourUserName, wait a minute or two (depending on GPU and settings you made in CLIP.py)
+-> You should now have a CLIP opinion as tokens_0001.txt in Auto-GPT/auto_gpt_workspace
+
+Optional:
+
+```bash
+python SHAPErun.py --prompt "A Pontiac Firebird car"
+```
+You should find s_000.png and the respective .ply in the Auto-GPT/images folder.
+When you run this FOR THE FIRST TIME EVER, it will download & build the Shap-E models in Auto-GPT/auto_gpt_workspace/shap_e_model_cache
+--> Please be patient (minutes, depending on your internet speed)!!
+
+
+BONUS: See what CLIP sees by computing (fast!) a heatmap highlighting which regions in the image activate the most to a given caption.
+```bash
+python manual_gradcam.py --image "0001.png" --txt "tokens_0001.txt"
+```
+Caption = tokens CLIP 'saw' in the image (returned "opinion" tokens_XXXXX.txt of GPT using "run_clip" on XXXXX.png in Auto-GPT)
+If you're wondering WTF CLIP saw in your image, and where - run this in a seperate command prompt "on the side" and according to what GPT last used in Auto-GPT.
+Will dump heatmap images for all CLIP tokens of all four saliency layers of the CLIP model in the Auto-GPT/GradCAM folder.
+For GradCAM requirements, see Auto-GPT/autogpt/commands/CLIP_gradcam.py -- adaptation of an ipynb notebook, pip install requirements left in as comments at the very top
+
+ToDo: Implement as "y -D" option that Auto-GPT accepts, same as "y -N", to execute after the next time run_clip is executed.
+
+
+## Important tips and troubleshooting of known issues including model limitations
+
+- Oddly enough, the relative output .\auto_gpt_workspace\clip_tokens.txt will ensure GPT-3.5 does not get confused and not knowing where CLIP token "opinion" is. 
+  GPT-4, however, will once try to read_file from the wrong place in the beginning. Simply approve with y, AI will "think" about file-not-found, correct itself, and never make that mistake again.
+  Sorry about a small waste of GPT-4 tokens - but this is the best way to make sure it works out of the box for both GPT models.
+
+- Make sure the folder structure is exactly as mentioned above. It's a delicate thing with executing subprocesses (.py files) from different locations.
+
+- Delete the auto-gpt.json in Auto-GPT/auto_gpt_workspace if you change the .yaml or encounter issues.
+
+- For local stable diffusion: I am using shutil.copyfile instead of shutil.move, meaning, I am trashing up your stablediffusion/outputs folder as I copy the images to Auto-GPT/images.
+  Why? Because I couldn't figure out a way that will ONLY check for existing stable diffusion images, e.g. 00001.png but NOT 0001.png. Naming the files slightly more complex, like SD_00001.png, instead confuses GPT-3.5.
+  So: Better have a bit of redundancy trash than files overwritten, right? Feel free to implement something that works, if you know how - I'd be delighted!
+
+
+## WARNING ABOUT "BIAS" AND "HARMFUL" OUTPUT IN PRE-TRAINED, UNCENSORED CLIP MODELS.
+
+While you probably shouldn't run Auto-GPT in "autonomous" mode, anyway, you'll probably also want to ACTUALLY proof-read the GPT-generated prompt carefully rather than just approving it!
+That is especially the case if you are not running local, and spamming offensive words might just get you banned from a text-to-image API.
+
+# CLIP IS UNCENSORED. CLIP SEES WHATEVER CLIP WANTS TO SEE (doesn't have to be related to what *you* see), including anything you can imagine there to be seen as of the training dataset.
+
+So a harmless image (your opinion) might lead to offensive, racist, biased, sexist output (CLIP opinion). Especially true if non-English text is present in the image.
+More info on typographic attacks and why CLIP is so obsessed with text: [Multimodal Neurons](https://openai.com/research/multimodal-neurons)
+Check the model-card.md and heed the warnings from OpenAI: [CLIP Model Card](https://github.com/openai/CLIP/blob/main/model-card.md)
+
+Use the above CLIPrun.py with pepe.png for an example that shouldn't be too toxic, but proves a point with regard to "oh yes, CLIP knows - CLIP was trained on the internet".
+
+PS: And yes, GPT-3.5 / GPT-4 will accept these terms and make a prompt with them. They might conclude "the CLIP opinion is not very useful" and try to do something else;
+however, the AI can be persuaded to "use the CLIP tokens to make a prompt for run_image" via user feedback, and will then only refrain from using blatantly offensive words like "r*pe". 
+However, CLIP opinion often includes chained "longword" tokens, like e.g. "instarape" - which GPT accepts, and that will in turn be understood by the CLIP inside stable diffusion et al just as well. 
+...And likely by an API filter, too.
+
+You have been warned. Do whatever floats your boat, but keep it limited to *your* boat - and don't blame me for getting kick-banned from any text-to-image API. That's all.
+
+----------------
+
+
 # Auto-GPT: An Autonomous GPT-4 Experiment
 [![Official Website](https://img.shields.io/badge/Official%20Website-agpt.co-blue?style=flat&logo=world&logoColor=white)](https://agpt.co)
 [![Unit Tests](https://img.shields.io/github/actions/workflow/status/Significant-Gravitas/Auto-GPT/ci.yml?label=unit%20tests)](https://github.com/Significant-Gravitas/Auto-GPT/actions/workflows/ci.yml)

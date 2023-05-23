@@ -107,8 +107,8 @@ def get_current_git_branch() -> str:
     except:
         return ""
 
-
-def get_latest_bulletin() -> tuple[str, bool]:
+from typing import Tuple
+def get_latest_bulletin() -> Tuple[str, bool]:
     exists = os.path.exists("data/CURRENT_BULLETIN.md")
     current_bulletin = ""
     if exists:

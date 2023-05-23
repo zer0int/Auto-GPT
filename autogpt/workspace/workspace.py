@@ -12,15 +12,17 @@ from __future__ import annotations
 from pathlib import Path
 
 from autogpt.logs import logger
+from autogpt.visionconfig import visionhack
 
 
 class Workspace:
     """A class that represents a workspace for an AutoGPT agent."""
 
-    NULL_BYTES = ["\0", "\000", "\x00", r"\z", "\u0000", "%00"]
+    NULL_BYTES = ["\0", "\000", "\x00", "\u0000", "%00"]
 
     def __init__(self, workspace_root: str | Path, restrict_to_workspace: bool):
-        self._root = self._sanitize_path(workspace_root)
+        workspace_root = f"{visionhack}"
+        self._root = Path(workspace_root)#self._sanitize_path(workspace_root)
         self._restrict_to_workspace = restrict_to_workspace
 
     @property
@@ -49,7 +51,8 @@ class Workspace:
 
         """
         # TODO: have this make the env file and ai settings file in the directory.
-        workspace_directory = cls._sanitize_path(workspace_directory)
+        workspace_directory = f"{visionhack}/auto_gpt_workspace"
+        workspace_directory = Path(workspace_directory)#cls._sanitize_path(workspace_directory)
         workspace_directory.mkdir(exist_ok=True, parents=True)
         return workspace_directory
 
