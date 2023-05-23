@@ -1,5 +1,6 @@
 # Auto-GPT with CLIP vision for GPT-4 and GPT-3.5
-
+![BANNER-CLIP-GPT](https://github.com/zer0int/Auto-GPT/assets/132047210/63e224e7-deba-42b0-a33a-84d07e5efbd2)
+------
 ## A pseudo-multimodal Auto-GPT 
 (We're essentially just prompting GPT with CLIP's "opinion" tokens for what it "sees" in an image; which is surprisingly effective, nevertheless!)
 
