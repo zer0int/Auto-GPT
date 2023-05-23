@@ -3,9 +3,9 @@
 ## A pseudo-multimodal Auto-GPT 
 (We're essentially just prompting GPT with CLIP's "opinion" tokens for what it "sees" in an image; which is surprisingly effective, nevertheless!)
 
-### GPT autonomous infinite variation prompting of text-to-image and text-to-3D 
-### GPT visual websearch based on image content 
-### your_idea_here
+- GPT autonomous infinite variation prompting of text-to-image and text-to-3D 
+- GPT visual websearch based on image content 
+- your_idea_here
 
 Please tag me on [Twitter: @zer0int1](https://twitter.com/zer0int1) if you use this for anything; I'd love to see it!
 
