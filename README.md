@@ -12,7 +12,7 @@ Please tag me on [Twitter: @zer0int1](https://twitter.com/zer0int1) if you use t
 
 Demo videos:
 ---------------
-[<img src="http://img.youtube.com/vi/fzFuTe1E5tU/0.jpg" width="240" height="180">](http://www.youtube.com/watch?v=fzFuTe1E5tU "Infinite shoe design with CLIP + Stable Diffusion") --- [<img src="http://img.youtube.com/vi/0C5WdhPfvIk/0.jpg" width="240" height="180">](http://www.youtube.com/watch?v=0C5WdhPfvIk "Infinite 3D mesh shoe design with CLIP + Shap-E")
+[<img src="http://img.youtube.com/vi/fzFuTe1E5tU/0.jpg" width="240" height="180">](http://www.youtube.com/watch?v=fzFuTe1E5tU "Infinite shoe design with CLIP + Stable Diffusion") 🔛 [<img src="http://img.youtube.com/vi/0C5WdhPfvIk/0.jpg" width="240" height="180">](http://www.youtube.com/watch?v=0C5WdhPfvIk "Infinite 3D mesh shoe design with CLIP + Shap-E")
 ----------------
 
 ## Steps to install / use
