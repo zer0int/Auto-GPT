@@ -88,15 +88,17 @@ ToDo: Implement as "y -D" option that Auto-GPT accepts, same as "y -N", to execu
   Why? Because I couldn't figure out a way that will ONLY check for existing stable diffusion images, e.g. 00001.png but NOT 0001.png. Naming the files slightly more complex, like SD_00001.png, instead confuses GPT-3.5.
   So: Better have a bit of redundancy trash than files overwritten, right? Feel free to implement something that works, if you know how - I'd be delighted!
 
+----
+
+
+## CLIP IS UNCENSORED
+⚠️💣💥⚠️
+- CLIP SEES WHATEVER CLIP WANTS TO SEE (doesn't have to be related to what *you* see) 🤯
 
 ⚠️⚠️ WARNING ABOUT "BIAS" AND "HARMFUL" OUTPUT IN PRE-TRAINED, UNCENSORED CLIP MODELS.
 
 While you probably shouldn't run Auto-GPT in "autonomous" mode, anyway, you'll probably also want to ACTUALLY proof-read the GPT-generated prompt ❗❗ carefully rather than just approving it!
 That is especially the case if you are not running local, and spamming offensive words might just get you banned from a text-to-image API ❗❗
-
-## CLIP IS UNCENSORED
-⚠️💣💥⚠️
-- CLIP SEES WHATEVER CLIP WANTS TO SEE (doesn't have to be related to what *you* see) 🤯
 
 So a harmless image (your opinion) might lead to offensive, racist, biased, sexist output (CLIP opinion) ❗. Especially true if non-English text is present in the image.
 - 👉 More info on typographic attacks and why CLIP is so obsessed with text: [Multimodal Neurons](https://openai.com/research/multimodal-neurons)
