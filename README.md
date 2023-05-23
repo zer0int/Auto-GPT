@@ -99,8 +99,8 @@ That is especially the case if you are not running local, and spamming offensive
 - CLIP SEES WHATEVER CLIP WANTS TO SEE (doesn't have to be related to what *you* see) 🤯
 
 So a harmless image (your opinion) might lead to offensive, racist, biased, sexist output (CLIP opinion) ❗. Especially true if non-English text is present in the image.
-👉 More info on typographic attacks and why CLIP is so obsessed with text: [Multimodal Neurons](https://openai.com/research/multimodal-neurons)
-👉 Check the model-card.md and heed the warnings from OpenAI: [CLIP Model Card](https://github.com/openai/CLIP/blob/main/model-card.md)
+- 👉 More info on typographic attacks and why CLIP is so obsessed with text: [Multimodal Neurons](https://openai.com/research/multimodal-neurons)
+- 👉 Check the model-card.md and heed the warnings from OpenAI: [CLIP Model Card](https://github.com/openai/CLIP/blob/main/model-card.md)
 
 Use the above CLIPrun.py with pepe.png for an example that shouldn't be too toxic, but proves a point with regard to "oh yes, CLIP knows - CLIP was trained on the internet".
 
