@@ -60,7 +60,7 @@ When you run this FOR THE FIRST TIME EVER, it will download & build the Shap-E m
 --> Please be patient (minutes, depending on your internet speed)!!
 
 -----------------
-![0001-RN50x4_L1-exploemails](https://github.com/zer0int/Auto-GPT/assets/132047210/7290c63a-aa86-4913-beee-435a68fe7c2f) ![0001-RN50x4_L3-collapses](https://github.com/zer0int/Auto-GPT/assets/132047210/9511a941-d529-4691-a26d-669838adb225)![0001-RN50x4_L4-sett](https://github.com/zer0int/Auto-GPT/assets/132047210/54373152-8c3b-40c4-a757-938c5a29963d)
+![0001-RN50x4_L1-exploemails](https://github.com/zer0int/Auto-GPT/assets/132047210/7290c63a-aa86-4913-beee-435a68fe7c2f) ![0001-RN50x4_L4-sett](https://github.com/zer0int/Auto-GPT/assets/132047210/54373152-8c3b-40c4-a757-938c5a29963d)
 
 BONUS: See what CLIP sees by computing (fast!) a heatmap highlighting which regions in the image activate the most to a given caption.
 ```bash
