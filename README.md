@@ -73,8 +73,8 @@ For GradCAM requirements, see Auto-GPT/autogpt/commands/CLIP_gradcam.py -- adapt
 
 ToDo: Implement as "y -D" option that Auto-GPT accepts, same as "y -N", to execute after the next time run_clip is executed.
 
-
-## Important tips and troubleshooting of known issues including model limitations
+-----
+## ❗ Important tips and troubleshooting, including model limitations
 
 - Oddly enough, the relative output .\auto_gpt_workspace\clip_tokens.txt will ensure GPT-3.5 does not get confused and not knowing where CLIP token "opinion" is. 
   GPT-4, however, will once try to read_file from the wrong place in the beginning. Simply approve with y, AI will "think" about file-not-found, correct itself, and never make that mistake again.
@@ -89,12 +89,13 @@ ToDo: Implement as "y -D" option that Auto-GPT accepts, same as "y -N", to execu
   So: Better have a bit of redundancy trash than files overwritten, right? Feel free to implement something that works, if you know how - I'd be delighted!
 
 
-## WARNING ABOUT "BIAS" AND "HARMFUL" OUTPUT IN PRE-TRAINED, UNCENSORED CLIP MODELS.
+## ⚠️⚠️ WARNING ABOUT "BIAS" AND "HARMFUL" OUTPUT IN PRE-TRAINED, UNCENSORED CLIP MODELS.
 
 While you probably shouldn't run Auto-GPT in "autonomous" mode, anyway, you'll probably also want to ACTUALLY proof-read the GPT-generated prompt carefully rather than just approving it!
 That is especially the case if you are not running local, and spamming offensive words might just get you banned from a text-to-image API.
 
-# CLIP IS UNCENSORED. CLIP SEES WHATEVER CLIP WANTS TO SEE (doesn't have to be related to what *you* see), including anything you can imagine there to be seen as of the training dataset.
+## ⚠️ CLIP IS UNCENSORED ⚠️
+- CLIP SEES WHATEVER CLIP WANTS TO SEE (doesn't have to be related to what *you* see) 🤯
 
 So a harmless image (your opinion) might lead to offensive, racist, biased, sexist output (CLIP opinion). Especially true if non-English text is present in the image.
 More info on typographic attacks and why CLIP is so obsessed with text: [Multimodal Neurons](https://openai.com/research/multimodal-neurons)
@@ -107,9 +108,11 @@ however, the AI can be persuaded to "use the CLIP tokens to make a prompt for ru
 However, CLIP opinion often includes chained "longword" tokens, like e.g. "instarape" - which GPT accepts, and that will in turn be understood by the CLIP inside stable diffusion et al just as well. 
 ...And likely by an API filter, too.
 
-You have been warned. Do whatever floats your boat, but keep it limited to *your* boat - and don't blame me for getting kick-banned from any text-to-image API. That's all.
-
+You have been warned. Do whatever floats your boat, but keep it limited to *your* boat - and don't blame me for getting kick-banned from any text-to-image API. That's all. ❗
+---
 ----------------
+Original README.MD
+---
 
 
 # Auto-GPT: An Autonomous GPT-4 Experiment
