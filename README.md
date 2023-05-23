@@ -18,7 +18,7 @@ Please tag me on [Twitter: @zer0int1](https://twitter.com/zer0int1) if you use t
 
 - [CLIP by OpenAI](https://github.com/openai/CLIP)
 
-### Optional Prerequisites
+### Optional Prerequisites:
 Depending on your use case, you might also need:
 
 - [Shap-E by OpenAI](https://github.com/openai/shap-e) (Text-to-3D)
@@ -42,7 +42,7 @@ CLIP GradCAM: [https://github.com/kevinzakka/clip_playground](https://github.com
 8. (Optional, case: running local stable diffusion): Edit Auto-GPT/auto_gpt_workspace/stablediffusion.py to match the model / config of SD you want to use
 8. (Optional, recommended) Make sure that everything is working by running the scripts independently outside of Auto-GPT (see below)
 
-### Verify everything works as expected via a cmd -> cd into Auto-GPT/auto_gpt_workspace and run:
+### Verify everything works via cmd -> cd into Auto-GPT/auto_gpt_workspace and run:
 
 ```bash
 python CLIPrun.py --image_path "C:/Users/JohnDoe/Auto-GPT/images/0001.png"
