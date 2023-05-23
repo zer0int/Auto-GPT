@@ -25,9 +25,9 @@ Depending on your use case, you might also need:
 - [Stable Diffusion by Stability-AI](https://github.com/Stability-AI/stablediffusion) (Text-to-Image, for commandline & running local as implemented in this repo)
 
 Other third-party credits: 
-CLIP Gradient Ascent: Adaptation of the original notebook "Closed Test Ascending CLIPtext" by [@advadnoun](https://twitter.com/advadnoun), used with explicit permission (Thanks!)
-CLIP GradCAM: [https://github.com/kevinzakka/clip_playground](https://github.com/kevinzakka/clip_playground)
-[My YouTube with screen recordings of this repo in action](https://www.youtube.com/@zer0int1/videos)
+- CLIP Gradient Ascent: Adaptation of the original notebook "Closed Test Ascending CLIPtext" by [@advadnoun](https://twitter.com/advadnoun)
+- CLIP GradCAM: [https://github.com/kevinzakka/clip_playground](https://github.com/kevinzakka/clip_playground)
+- [My YouTube with screen recordings of this repo in action](https://www.youtube.com/@zer0int1/videos)
 
 ### Usage:
 
